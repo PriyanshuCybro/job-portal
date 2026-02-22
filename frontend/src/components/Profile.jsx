@@ -46,47 +46,47 @@ const Profile = () => {
         <div className='min-h-screen bg-slate-50'>
             <Navbar />
             <div className='max-w-5xl mx-auto py-6 px-4 sm:px-6'>
-                <div className='bg-white border border-slate-200 rounded-2xl shadow-sm p-6 sm:p-8'>
-                    <div className='flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5'>
-                        <div className='flex items-center gap-4'>
-                            <Avatar className="h-20 w-20 ring-2 ring-slate-100">
+                <div className='bg-white border border-slate-200 rounded-2xl shadow-sm p-4 sm:p-6 md:p-8'>
+                    <div className='flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 sm:gap-5'>
+                        <div className='flex items-start sm:items-center gap-3 sm:gap-4 min-w-0 flex-1'>
+                            <Avatar className="h-16 w-16 sm:h-20 sm:w-20 ring-2 ring-slate-100 flex-shrink-0">
                                 <AvatarImage src={user?.profile?.profilePhoto || "https://www.shutterstock.com/image-vector/circle-line-simple-design-logo-600nw-2174926871.jpg"} alt="profile" />
                             </Avatar>
-                            <div>
-                                <h1 className='font-semibold text-2xl text-slate-900'>{user?.fullname}</h1>
-                                <p className='text-slate-600 mt-1'>{user?.profile?.bio || "No bio added yet"}</p>
+                            <div className='min-w-0 flex-1'>
+                                <h1 className='font-semibold text-lg sm:text-xl md:text-2xl text-slate-900 break-words'>{user?.fullname}</h1>
+                                <p className='text-sm sm:text-base text-slate-600 mt-1 break-words line-clamp-2'>{user?.profile?.bio || "No bio added yet"}</p>
                             </div>
                         </div>
-                        <Button onClick={() => setOpen(true)} className="w-fit" variant="outline"><Pen className='h-4 w-4 mr-2' />Edit Profile</Button>
+                        <Button onClick={() => setOpen(true)} className="w-full sm:w-fit flex-shrink-0" variant="outline"><Pen className='h-4 w-4 mr-2' />Edit Profile</Button>
                     </div>
 
                     <div className='grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6'>
-                        <div className='flex items-center gap-3 rounded-lg border border-slate-200 p-3'>
-                            <Mail className='h-5 w-5 text-slate-600' />
-                            <span className='text-slate-800'>{user?.email}</span>
+                        <div className='flex items-center gap-3 rounded-lg border border-slate-200 p-3 min-w-0'>
+                            <Mail className='h-5 w-5 text-slate-600 flex-shrink-0' />
+                            <span className='text-sm sm:text-base text-slate-800 truncate'>{user?.email}</span>
                         </div>
-                        <div className='flex items-center gap-3 rounded-lg border border-slate-200 p-3'>
-                            <Contact className='h-5 w-5 text-slate-600' />
-                            <span className='text-slate-800'>{user?.phoneNumber}</span>
+                        <div className='flex items-center gap-3 rounded-lg border border-slate-200 p-3 min-w-0'>
+                            <Contact className='h-5 w-5 text-slate-600 flex-shrink-0' />
+                            <span className='text-sm sm:text-base text-slate-800 truncate'>{user?.phoneNumber}</span>
                         </div>
                     </div>
 
                     <div className='my-6'>
-                        <h2 className='font-semibold text-slate-900 mb-2'>Skills</h2>
+                        <h2 className='font-semibold text-base sm:text-lg text-slate-900 mb-2'>Skills</h2>
                         <div className='flex flex-wrap items-center gap-2'>
                             {
-                                user?.profile?.skills?.length ? user?.profile?.skills.map((item, index) => <Badge key={index} variant="secondary">{item}</Badge>) : <span className='text-slate-500'>NA</span>
+                                user?.profile?.skills?.length ? user?.profile?.skills.map((item, index) => <Badge key={index} variant="secondary" className='text-xs sm:text-sm'>{item}</Badge>) : <span className='text-slate-500 text-sm'>NA</span>
                             }
                         </div>
                     </div>
 
-                    <div className='rounded-lg border border-slate-200 p-4'>
-                        <Label className="text-base font-semibold text-slate-900">Resume</Label>
-                        <div className='mt-2 flex items-center gap-2 text-sm'>
-                            <FileText className='h-4 w-4 text-slate-600' />
+                    <div className='rounded-lg border border-slate-200 p-3 sm:p-4'>
+                        <Label className="text-sm sm:text-base font-semibold text-slate-900">Resume</Label>
+                        <div className='mt-2 flex items-center gap-2 text-xs sm:text-sm min-w-0'>
+                            <FileText className='h-4 w-4 text-slate-600 flex-shrink-0' />
                             {
                                 hasResume ? (
-                                    <a target='_blank' rel='noopener noreferrer' href={getServerResumeUrl(user?.profile?.resumePublicId)} className='text-blue-600 hover:underline cursor-pointer'>
+                                    <a target='_blank' rel='noopener noreferrer' href={getServerResumeUrl(user?.profile?.resumePublicId)} className='text-blue-600 hover:underline cursor-pointer truncate'>
                                         {user?.profile?.resumeOriginalName || 'View Resume (PDF)'}
                                     </a>
                                 ) : (
@@ -98,7 +98,7 @@ const Profile = () => {
                 </div>
 
                 <div className='mt-6 bg-white border border-slate-200 rounded-2xl shadow-sm p-4 sm:p-6'>
-                    <h1 className='font-semibold text-xl text-slate-900 mb-4'>Applied Jobs</h1>
+                    <h1 className='font-semibold text-lg sm:text-xl text-slate-900 mb-4'>Applied Jobs</h1>
                     <AppliedJobTable />
                 </div>
             </div>
