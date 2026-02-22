@@ -1,4 +1,6 @@
-const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const rawBaseUrl = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const hasProtocol = /^https?:\/\//i.test(rawBaseUrl);
+const BASE_URL = hasProtocol ? rawBaseUrl : `https://${rawBaseUrl}`;
 
 export const USER_API_END_POINT = `${BASE_URL}/api/v1/user`;
 export const JOB_API_END_POINT = `${BASE_URL}/api/v1/job`;
