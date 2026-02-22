@@ -46,6 +46,45 @@ const HeroSection = () => {
                     from { opacity: 0; transform: translateX(-30px); }
                     to { opacity: 1; transform: translateX(0); }
                 }
+                @keyframes gradientShift {
+                    0%, 100% { background-position: 0% 50%; }
+                    50% { background-position: 100% 50%; }
+                }
+                @keyframes shimmer {
+                    0% { background-position: -200% center; }
+                    100% { background-position: 200% center; }
+                }
+                @keyframes textReveal {
+                    0% { opacity: 0; transform: translateY(20px) scale(0.9); }
+                    100% { opacity: 1; transform: translateY(0) scale(1); }
+                }
+                @keyframes bounceIn {
+                    0% { opacity: 0; transform: scale(0.5) translateY(30px); }
+                    60% { opacity: 1; transform: scale(1.05); }
+                    100% { transform: scale(1) translateY(0); }
+                }
+                @keyframes pulseGlow {
+                    0%, 100% { 
+                        text-shadow: 0 0 10px rgba(45, 212, 191, 0.5),
+                                     0 0 20px rgba(45, 212, 191, 0.3),
+                                     0 0 30px rgba(45, 212, 191, 0.2);
+                    }
+                    50% { 
+                        text-shadow: 0 0 20px rgba(45, 212, 191, 0.8),
+                                     0 0 30px rgba(45, 212, 191, 0.6),
+                                     0 0 40px rgba(45, 212, 191, 0.4);
+                    }
+                }
+                @keyframes fadeInRotate {
+                    from { 
+                        opacity: 0; 
+                        transform: translateX(-50px) rotate(-5deg) scale(0.8);
+                    }
+                    to { 
+                        opacity: 1; 
+                        transform: translateX(0) rotate(0) scale(1);
+                    }
+                }
                 .animate-float1 { animation: float1 8s ease-in-out infinite; }
                 .animate-float2 { animation: float2 10s ease-in-out infinite; }
                 .animate-fadeInDown { animation: fadeInDown 0.8s ease-out; }
@@ -53,6 +92,24 @@ const HeroSection = () => {
                 .animate-pulse-border { animation: pulse-border 3s ease-in-out infinite; }
                 .animate-glow { animation: glow 4s ease-in-out infinite; }
                 .animate-slideIn { animation: slideIn 0.8s ease-out; }
+                .animate-gradientShift { 
+                    background-size: 200% 200%;
+                    animation: gradientShift 3s ease infinite;
+                }
+                .animate-shimmer {
+                    background: linear-gradient(90deg, 
+                        transparent 0%, 
+                        rgba(45, 212, 191, 0.4) 50%, 
+                        transparent 100%);
+                    background-size: 200% 100%;
+                    animation: shimmer 3s infinite;
+                    -webkit-background-clip: text;
+                    background-clip: text;
+                }
+                .animate-textReveal { animation: textReveal 0.6s ease-out; }
+                .animate-bounceIn { animation: bounceIn 0.9s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+                .animate-pulseGlow { animation: pulseGlow 2s ease-in-out infinite; }
+                .animate-fadeInRotate { animation: fadeInRotate 1s cubic-bezier(0.34, 1.56, 0.64, 1); }
             `}</style>
             <div className='relative w-full min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-20 px-4 sm:px-6 lg:px-8 overflow-hidden'>
                 {/* Animated background elements */}
@@ -77,9 +134,17 @@ const HeroSection = () => {
                     </h1>
 
                     {/* Subtitle */}
-                    <p className='text-base sm:text-lg text-slate-300 text-center mb-12 max-w-2xl animate-slideIn' style={{animationDelay: '0.3s'}}>
-                        <span className='font-semibold text-teal-400'>Connect talent with opportunity seamlessly.</span> Whether you're a job seeker looking for your next career move or a recruiter searching for the perfect candidate, our platform makes hiring effortless, efficient, and effective.
-                    </p>
+                    <div className='text-base sm:text-lg text-slate-300 text-center mb-12 max-w-2xl'>
+                        <span className='inline-block font-bold text-transparent bg-gradient-to-r from-teal-400 via-cyan-400 to-teal-400 bg-clip-text animate-gradientShift animate-bounceIn animate-pulseGlow' style={{animationDelay: '0.3s'}}>
+                            Connect talent with opportunity seamlessly.
+                        </span>
+                        <span className='inline-block animate-textReveal' style={{animationDelay: '0.6s'}}> Whether you're a </span>
+                        <span className='inline-block font-semibold text-teal-300 animate-fadeInRotate' style={{animationDelay: '0.75s'}}>job seeker</span>
+                        <span className='inline-block animate-textReveal' style={{animationDelay: '0.9s'}}> looking for your next career move or a </span>
+                        <span className='inline-block font-semibold text-cyan-300 animate-fadeInRotate' style={{animationDelay: '1.05s'}}>recruiter</span>
+                        <span className='inline-block animate-textReveal' style={{animationDelay: '1.2s'}}> searching for the perfect candidate, our platform makes hiring </span>
+                        <span className='inline-block font-bold text-teal-400 animate-shimmer animate-textReveal' style={{animationDelay: '1.35s'}}>effortless, efficient, and effective.</span>
+                    </div>
 
                     {/* Search Bar */}
                     <div className='w-full max-w-md sm:max-w-xl animate-fadeInUp'>
