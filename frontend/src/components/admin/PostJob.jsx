@@ -1,21 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Navbar from '../shared/Navbar'
 import { Label } from '../ui/label'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 import axios from 'axios'
 import { JOB_API_END_POINT } from '@/utils/constant'
-import { setAllAdminJobs, setAllJobs } from '@/redux/jobSlice'
 import { toast } from 'sonner'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Loader2 } from 'lucide-react'
 
 const PostJob = () => {
-    const { id } = useParams();
-    const isEditMode = Boolean(id);
-    
     const [input, setInput] = useState({
         title: "",
         description: "",
@@ -28,43 +24,9 @@ const PostJob = () => {
         companyId: ""
     });
     const [loading, setLoading]= useState(false);
-    const [fetchingJob, setFetchingJob] = useState(false);
     const navigate = useNavigate();
-    const dispatch = useDispatch();
 
     const { companies } = useSelector(store => store.company);
-    
-    // Fetch job data for edit mode
-    useEffect(() => {
-        if (isEditMode) {
-            setFetchingJob(true);
-            axios.get(`${JOB_API_END_POINT}/get/${id}`, { withCredentials: true })
-                .then((res) => {
-                    if (res.data?.success) {
-                        const job = res.data.job;
-                        setInput({
-                            title: job.title || "",
-                            description: job.description || "",
-                            requirements: Array.isArray(job.requirements) ? job.requirements.join(", ") : "",
-                            salary: job.salary || "",
-                            location: job.location || "",
-                            jobType: job.jobType || "",
-                            experience: job.experienceLevel || "",
-                            position: job.position || 0,
-                            companyId: job.company?._id || ""
-                        });
-                    }
-                })
-                .catch((error) => {
-                    toast.error("Failed to fetch job details");
-                    console.error(error);
-                })
-                .finally(() => {
-                    setFetchingJob(false);
-                });
-        }
-    }, [id, isEditMode]);
-    
     const changeEventHandler = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value });
     };
@@ -103,34 +65,16 @@ const PostJob = () => {
             const payload = {
                 ...input,
                 requirements: input.requirements.trim(),
-                salary: input.salary.trim(),
-                experience: Number(input.experience),
+                salary: `${input.salary}`.trim(),
                 position: Number(input.position)
             };
-            
-            const url = isEditMode 
-                ? `${JOB_API_END_POINT}/update/${id}` 
-                : `${JOB_API_END_POINT}/post`;
-            
-            const method = isEditMode ? 'put' : 'post';
-            
-            const res = await axios[method](url, payload,{
+            const res = await axios.post(`${JOB_API_END_POINT}/post`, payload,{
                 headers:{
                     'Content-Type':'application/json'
                 },
                 withCredentials:true
             });
             if(res.data.success){
-                const [adminJobsRes, allJobsRes] = await Promise.all([
-                    axios.get(`${JOB_API_END_POINT}/getadminjobs`, { withCredentials: true }),
-                    axios.get(`${JOB_API_END_POINT}/get?keyword=`, { withCredentials: true })
-                ]);
-                if (adminJobsRes.data?.success) {
-                    dispatch(setAllAdminJobs(adminJobsRes.data.jobs));
-                }
-                if (allJobsRes.data?.success) {
-                    dispatch(setAllJobs(allJobsRes.data.jobs));
-                }
                 toast.success(res.data.message);
                 navigate("/admin/jobs");
             }
@@ -145,13 +89,8 @@ const PostJob = () => {
         <div>
             <Navbar />
             <div className='flex items-center justify-center w-screen my-5'>
-                {fetchingJob ? (
-                    <div className="flex items-center justify-center py-20">
-                        <Loader2 className='h-8 w-8 animate-spin' />
-                    </div>
-                ) : (
-                    <form onSubmit = {submitHandler} className='p-8 max-w-4xl border border-gray-200 shadow-lg rounded-md'>
-                        <div className='grid grid-cols-2 gap-2'>
+                <form onSubmit = {submitHandler} className='p-8 max-w-4xl border border-gray-200 shadow-lg rounded-md'>
+                    <div className='grid grid-cols-2 gap-2'>
                         <div>
                             <Label>Title</Label>
                             <Input
@@ -183,9 +122,9 @@ const PostJob = () => {
                             />
                         </div>
                         <div>
-                            <Label>Salary (e.g., 1-2LPA or 50000)</Label>
+                            <Label>Salary</Label>
                             <Input
-                                type="text"
+                                type="number"
                                 name="salary"
                                 value={input.salary}
                                 onChange={changeEventHandler}
@@ -233,7 +172,7 @@ const PostJob = () => {
                             />
                         </div>
                         {companies.length > 0 && (
-                            <Select onValueChange={selectChangeHandler} value={input.companyId}>
+                            <Select onValueChange={selectChangeHandler}>
                                 <SelectTrigger className="w-[180px]">
                                     <SelectValue placeholder="Select a Company" />
                                 </SelectTrigger>
@@ -255,14 +194,13 @@ const PostJob = () => {
                         </Button>
                     ) : (
                         <Button type="submit" className="w-full my-4" disabled={companies.length === 0}>
-                            {isEditMode ? "Update Job" : "Post New Job"}
+                            Post New Job
                         </Button>
                     )}
                     {
                         companies.length === 0 && <p className='text-xs text-red-600 font-bold text-center my-3'>*Please register a company first, before posting a jobs</p>
                     }
                 </form>
-                )}
             </div>
         </div>
     )
