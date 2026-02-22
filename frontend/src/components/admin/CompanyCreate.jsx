@@ -12,11 +12,17 @@ import { setSingleCompany } from '@/redux/companySlice'
 
 const CompanyCreate = () => {
     const navigate = useNavigate();
-    const [companyName, setCompanyName] = useState();
+    const [companyName, setCompanyName] = useState("");
     const dispatch = useDispatch();
     const registerNewCompany = async () => {
+        const trimmedName = companyName.trim();
+        if (!trimmedName) {
+            toast.error("Company name is required.");
+            return;
+        }
+
         try {
-            const res = await axios.post(`${COMPANY_API_END_POINT}/register`, {companyName}, {
+            const res = await axios.post(`${COMPANY_API_END_POINT}/register`, { companyName: trimmedName }, {
                 headers:{
                     'Content-Type':'application/json'
                 },
@@ -29,7 +35,8 @@ const CompanyCreate = () => {
                 navigate(`/admin/companies/${companyId}`);
             }
         } catch (error) {
-            console.log(error);
+            const message = error?.response?.data?.message || "Failed to register company.";
+            toast.error(message);
         }
     }
     return (
@@ -50,7 +57,7 @@ const CompanyCreate = () => {
                 />
                 <div className='flex items-center gap-2 my-10'>
                     <Button variant="outline" onClick={() => navigate("/admin/companies")}>Cancel</Button>
-                    <Button onClick={registerNewCompany}>Continue</Button>
+                    <Button onClick={registerNewCompany} disabled={!companyName.trim()}>Continue</Button>
                 </div>
             </div>
         </div>
