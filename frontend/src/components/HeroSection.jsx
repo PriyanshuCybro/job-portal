@@ -148,19 +148,19 @@ const HeroSection = () => {
 
                     {/* Search Bar */}
                     <div className='w-full max-w-md sm:max-w-xl animate-fadeInUp'>
-                        <div className='flex h-12 sm:h-13 shadow-lg rounded-lg overflow-hidden border border-slate-600 animate-pulse-border hover:border-teal-500/80 transition-all'>
+                        <div className='flex h-14 sm:h-14 shadow-lg rounded-lg overflow-hidden border border-slate-600 animate-pulse-border hover:border-teal-500/80 transition-all'>
                             <input
                                 type="text"
                                 placeholder='Find your dream jobs'
                                 value={query}
                                 onChange={(e) => setQuery(e.target.value)}
-                                className='flex-1 px-4 sm:px-6 bg-slate-700/50 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all border-none'
+                                className='flex-1 px-4 sm:px-6 bg-slate-700/50 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all border-none text-sm sm:text-base'
                             />
                             <Button 
                                 onClick={searchJobHandler} 
-                                className="px-5 sm:px-6 h-full bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white flex items-center justify-center transition-all rounded-none p-0 hover:shadow-lg hover:shadow-teal-500/50"
+                                className="px-6 sm:px-7 h-full bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white flex items-center justify-center transition-all rounded-none p-0 hover:shadow-lg hover:shadow-teal-500/50"
                             >
-                                <Search className='h-5 w-5' />
+                                <Search className='h-6 w-6 sm:h-6 sm:w-6' />
                             </Button>
                         </div>
                     </div>
