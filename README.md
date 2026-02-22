@@ -224,7 +224,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 👨‍💻 Authors
 
-**Priyanshu Pandey**  
+**Shreya Pandey**  
 GitHub: [@shreyaPandey028](https://github.com/shreyaPandey028)
 
 **Priyanshu Tiwari** 
