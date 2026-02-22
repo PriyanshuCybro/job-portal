@@ -33,21 +33,21 @@ const CompaniesTable = () => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {
-                        filterCompany?.map((company) => (
-                            <tr>
+                    {filterCompany?.length ? (
+                        filterCompany.map((company) => (
+                            <tr key={company._id}>
                                 <TableCell>
                                     <Avatar>
-                                        <AvatarImage src={company.logo}/>
+                                        <AvatarImage src={company.logo} />
                                     </Avatar>
                                 </TableCell>
                                 <TableCell>{company.name}</TableCell>
-                                <TableCell>{company.createdAt.split("T")[0]}</TableCell>
+                                <TableCell>{company.createdAt?.split("T")?.[0] || "N/A"}</TableCell>
                                 <TableCell className="text-right cursor-pointer">
                                     <Popover>
                                         <PopoverTrigger><MoreHorizontal /></PopoverTrigger>
                                         <PopoverContent className="w-32">
-                                            <div onClick={()=> navigate(`/admin/companies/${company._id}`)} className='flex items-center gap-2 w-fit cursor-pointer'>
+                                            <div onClick={() => navigate(`/admin/companies/${company._id}`)} className='flex items-center gap-2 w-fit cursor-pointer'>
                                                 <Edit2 className='w-4' />
                                                 <span>Edit</span>
                                             </div>
@@ -57,7 +57,13 @@ const CompaniesTable = () => {
                             </tr>
 
                         ))
-                    }
+                    ) : (
+                        <TableRow>
+                            <TableCell colSpan={4} className="text-center text-sm text-gray-500">
+                                No companies found. Create a company to get started.
+                            </TableCell>
+                        </TableRow>
+                    )}
                 </TableBody>
             </Table>
         </div>

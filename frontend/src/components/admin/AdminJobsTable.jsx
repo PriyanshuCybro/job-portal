@@ -36,21 +36,21 @@ const AdminJobsTable = () => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {
-                        filterJobs?.map((job) => (
-                            <tr>
-                                <TableCell>{job?.company?.name}</TableCell>
+                    {filterJobs?.length ? (
+                        filterJobs.map((job) => (
+                            <tr key={job._id}>
+                                <TableCell>{job?.company?.name || "N/A"}</TableCell>
                                 <TableCell>{job?.title}</TableCell>
-<TableCell>{job?.createdAt?.split("T")?.[0] || "N/A"}</TableCell>
+                                <TableCell>{job?.createdAt?.split("T")?.[0] || "N/A"}</TableCell>
                                 <TableCell className="text-right cursor-pointer">
                                     <Popover>
                                         <PopoverTrigger><MoreHorizontal /></PopoverTrigger>
                                         <PopoverContent className="w-32">
-                                            <div onClick={()=> navigate(`/admin/companies/${job._id}`)} className='flex items-center gap-2 w-fit cursor-pointer'>
+                                            <div onClick={() => navigate(`/admin/jobs/${job._id}`)} className='flex items-center gap-2 w-fit cursor-pointer'>
                                                 <Edit2 className='w-4' />
                                                 <span>Edit</span>
                                             </div>
-                                            <div onClick={()=> navigate(`/admin/jobs/${job._id}/applicants`)} className='flex items-center w-fit gap-2 cursor-pointer mt-2'>
+                                            <div onClick={() => navigate(`/admin/jobs/${job._id}/applicants`)} className='flex items-center w-fit gap-2 cursor-pointer mt-2'>
                                                 <Eye className='w-4'/>
                                                 <span>Applicants</span>
                                             </div>
@@ -60,7 +60,13 @@ const AdminJobsTable = () => {
                             </tr>
 
                         ))
-                    }
+                    ) : (
+                        <TableRow>
+                            <TableCell colSpan={4} className="text-center text-sm text-gray-500">
+                                No jobs found. Post a job to see it here.
+                            </TableCell>
+                        </TableRow>
+                    )}
                 </TableBody>
             </Table>
         </div>
