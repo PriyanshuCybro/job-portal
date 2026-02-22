@@ -11,8 +11,6 @@ import { toast } from 'sonner'
 import { useNavigate } from 'react-router-dom'
 import { Loader2 } from 'lucide-react'
 
-const companyArray = [];
-
 const PostJob = () => {
     const [input, setInput] = useState({
         title: "",
@@ -34,15 +32,43 @@ const PostJob = () => {
     };
 
     const selectChangeHandler = (value) => {
-        const selectedCompany = companies.find((company)=> company.name.toLowerCase() === value);
-        setInput({...input, companyId:selectedCompany._id});
+        setInput({ ...input, companyId: value });
+    };
+
+    const hasMissingFields = () => {
+        const requiredFields = [
+            input.title,
+            input.description,
+            input.requirements,
+            input.salary,
+            input.location,
+            input.jobType,
+            input.experience,
+            input.position,
+            input.companyId
+        ];
+        return requiredFields.some((field) => `${field}`.trim() === "");
     };
 
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
+            if (companies.length === 0) {
+                toast.error("Please register a company before posting a job.");
+                return;
+            }
+            if (hasMissingFields()) {
+                toast.error("Please fill all required fields.");
+                return;
+            }
             setLoading(true);
-            const res = await axios.post(`${JOB_API_END_POINT}/post`, input,{
+            const payload = {
+                ...input,
+                requirements: input.requirements.trim(),
+                salary: `${input.salary}`.trim(),
+                position: Number(input.position)
+            };
+            const res = await axios.post(`${JOB_API_END_POINT}/post`, payload,{
                 headers:{
                     'Content-Type':'application/json'
                 },
@@ -53,7 +79,7 @@ const PostJob = () => {
                 navigate("/admin/jobs");
             }
         } catch (error) {
-            toast.error(error.response.data.message);
+            toast.error(error?.response?.data?.message || "Failed to post job. Please try again.");
         } finally{
             setLoading(false);
         }
@@ -145,31 +171,32 @@ const PostJob = () => {
                                 className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
                             />
                         </div>
-                        {
-                            companies.length > 0 && (
-                                <Select onValueChange={selectChangeHandler}>
-                                    <SelectTrigger className="w-[180px]">
-                                        <SelectValue placeholder="Select a Company" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectGroup>
-                                            {
-                                                companies.map((company) => {
-                                                    return (
-                                                        <SelectItem value={company?.name?.toLowerCase()}>{company.name}</SelectItem>
-                                                    )
-                                                })
-                                            }
-
-                                        </SelectGroup>
-                                    </SelectContent>
-                                </Select>
-                            )
-                        }
+                        {companies.length > 0 && (
+                            <Select onValueChange={selectChangeHandler}>
+                                <SelectTrigger className="w-[180px]">
+                                    <SelectValue placeholder="Select a Company" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        {companies.map((company) => (
+                                            <SelectItem key={company._id} value={company._id}>
+                                                {company.name}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                        )}
                     </div> 
-                    {
-                        loading ? <Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button> : <Button type="submit" className="w-full my-4">Post New Job</Button>
-                    }
+                    {loading ? (
+                        <Button className="w-full my-4" disabled>
+                            <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait
+                        </Button>
+                    ) : (
+                        <Button type="submit" className="w-full my-4" disabled={companies.length === 0}>
+                            Post New Job
+                        </Button>
+                    )}
                     {
                         companies.length === 0 && <p className='text-xs text-red-600 font-bold text-center my-3'>*Please register a company first, before posting a jobs</p>
                     }
