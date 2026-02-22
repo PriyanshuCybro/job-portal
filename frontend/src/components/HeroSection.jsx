@@ -42,12 +42,17 @@ const HeroSection = () => {
                     0%, 100% { opacity: 1; }
                     50% { opacity: 0.8; }
                 }
+                @keyframes slideIn {
+                    from { opacity: 0; transform: translateX(-30px); }
+                    to { opacity: 1; transform: translateX(0); }
+                }
                 .animate-float1 { animation: float1 8s ease-in-out infinite; }
                 .animate-float2 { animation: float2 10s ease-in-out infinite; }
                 .animate-fadeInDown { animation: fadeInDown 0.8s ease-out; }
                 .animate-fadeInUp { animation: fadeInUp 0.8s ease-out 0.3s both; }
                 .animate-pulse-border { animation: pulse-border 3s ease-in-out infinite; }
                 .animate-glow { animation: glow 4s ease-in-out infinite; }
+                .animate-slideIn { animation: slideIn 0.8s ease-out; }
             `}</style>
             <div className='relative w-full min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-20 px-4 sm:px-6 lg:px-8 overflow-hidden'>
                 {/* Animated background elements */}
@@ -72,8 +77,8 @@ const HeroSection = () => {
                     </h1>
 
                     {/* Subtitle */}
-                    <p className='text-base sm:text-lg text-slate-300 text-center mb-12 max-w-2xl animate-fadeInDown' style={{animationDelay: '0.2s'}}>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid aspernatur temporibus nihil tempora dolor!
+                    <p className='text-base sm:text-lg text-slate-300 text-center mb-12 max-w-2xl animate-slideIn' style={{animationDelay: '0.3s'}}>
+                        <span className='font-semibold text-teal-400'>Connect talent with opportunity seamlessly.</span> Whether you're a job seeker looking for your next career move or a recruiter searching for the perfect candidate, our platform makes hiring effortless, efficient, and effective.
                     </p>
 
                     {/* Search Bar */}
