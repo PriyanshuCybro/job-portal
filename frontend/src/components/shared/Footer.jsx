@@ -7,7 +7,7 @@ const Footer = () => {
         <div className='max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4'>
           <div className='mb-4 md:mb-0 text-center md:text-left'>
             <h2 className='text-xl font-bold text-white'>Job<span className='text-teal-400'>Portal</span></h2>
-            <p className='text-sm text-slate-400'>© 2024 Your Company. All rights reserved.</p>
+            <p className='text-sm text-slate-400'>© 2026 JobPortal. All rights reserved.</p>
           </div>
           
           <div className='flex space-x-6 mt-4 md:mt-0'>
