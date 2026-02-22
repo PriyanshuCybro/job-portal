@@ -56,9 +56,9 @@ const Login = () => {
     return (
         <div>
             <Navbar />
-            <div className='flex items-center justify-center max-w-7xl mx-auto'>
-                <form onSubmit={submitHandler} className='w-1/2 border border-gray-200 rounded-md p-4 my-10'>
-                    <h1 className='font-bold text-xl mb-5'>Login</h1>
+            <div className='flex items-center justify-center max-w-7xl mx-auto px-4'>
+                <form onSubmit={submitHandler} className='w-full sm:w-3/4 md:w-2/3 lg:w-1/2 border border-gray-200 rounded-md p-4 sm:p-6 my-10'>
+                    <h1 className='font-bold text-lg sm:text-xl mb-5'>Login</h1>
                     <div className='my-2'>
                         <Label>Email</Label>
                         <Input
@@ -80,7 +80,7 @@ const Login = () => {
                             placeholder="patel@gmail.com"
                         />
                     </div>
-                    <div className='flex items-center justify-between'>
+                    <div className='flex flex-col sm:flex-row items-start sm:items-center justify-between'>
                         <RadioGroup className="flex items-center gap-4 my-5">
                             <div className="flex items-center space-x-2">
                                 <Input
@@ -109,7 +109,7 @@ const Login = () => {
                     {
                         loading ? <Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button> : <Button type="submit" className="w-full my-4">Login</Button>
                     }
-                    <span className='text-sm'>Don't have an account? <Link to="/signup" className='text-blue-600'>Signup</Link></span>
+                    <span className='text-xs sm:text-sm'>Don't have an account? <Link to="/signup" className='text-blue-600'>Signup</Link></span>
                 </form>
             </div>
         </div>

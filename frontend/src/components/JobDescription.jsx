@@ -90,19 +90,19 @@ const JobDescription = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto my-10">
-      <div className="flex items-center justify-between">
+    <div className="max-w-7xl mx-auto my-10 px-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="font-bold text-xl">{singleJob.title}</h1>
+          <h1 className="font-bold text-lg sm:text-xl">{singleJob.title}</h1>
 
-          <div className="flex items-center gap-2 mt-4">
-            <Badge className="text-blue-700 font-bold" variant="ghost">
+          <div className="flex items-center gap-2 mt-4 flex-wrap">
+            <Badge className="text-blue-700 font-bold text-xs" variant="ghost">
               {singleJob.position} Positions
             </Badge>
-            <Badge className="text-[#F83002] font-bold" variant="ghost">
+            <Badge className="text-[#F83002] font-bold text-xs" variant="ghost">
               {singleJob.jobType}
             </Badge>
-            <Badge className="text-[#7209b7] font-bold" variant="ghost">
+            <Badge className="text-[#7209b7] font-bold text-xs" variant="ghost">
               {singleJob.salary} LPA
             </Badge>
           </div>
@@ -111,7 +111,7 @@ const JobDescription = () => {
         <Button
           onClick={isApplied ? null : applyJobHandler}
           disabled={isApplied}
-          className={`rounded-lg ${
+          className={`w-full sm:w-auto rounded-lg ${
             isApplied
               ? "bg-gray-600 cursor-not-allowed"
               : "bg-[#7209b7] hover:bg-[#5f32ad]"
@@ -121,63 +121,63 @@ const JobDescription = () => {
         </Button>
       </div>
 
-      <h1 className="border-b-2 border-b-gray-300 font-medium py-4">
+      <h1 className="border-b-2 border-b-gray-300 font-medium py-4 text-sm sm:text-base">
         Job Description
       </h1>
 
-      <div className="my-4">
-        <h1 className="font-bold my-1">
+      <div className="my-4 space-y-3">
+        <h1 className="font-bold text-sm sm:text-base">
           Role:
-          <span className="pl-4 font-normal text-gray-800">
+          <span className="pl-2 sm:pl-4 font-normal text-gray-800 break-words">
             {singleJob.title}
           </span>
         </h1>
 
-        <h1 className="font-bold my-1">
+        <h1 className="font-bold text-sm sm:text-base">
           Location:
-          <span className="pl-4 font-normal text-gray-800">
+          <span className="pl-2 sm:pl-4 font-normal text-gray-800">
             {singleJob.location}
           </span>
         </h1>
 
-        <h1 className="font-bold my-1">
+        <h1 className="font-bold text-sm sm:text-base">
           Description:
-          <span className="pl-4 font-normal text-gray-800">
+          <span className="pl-2 sm:pl-4 font-normal text-gray-800 break-words">
             {singleJob.description}
           </span>
         </h1>
 
-        <h1 className="font-bold my-1">
+        <h1 className="font-bold text-sm sm:text-base">
           Experience:
-          <span className="pl-4 font-normal text-gray-800">
+          <span className="pl-2 sm:pl-4 font-normal text-gray-800">
             {singleJob.experienceLevel} yrs
           </span>
         </h1>
 
-        <h1 className="font-bold my-1">
+        <h1 className="font-bold text-sm sm:text-base">
           Salary:
-          <span className="pl-4 font-normal text-gray-800">
+          <span className="pl-2 sm:pl-4 font-normal text-gray-800">
             {singleJob.salary} LPA
           </span>
         </h1>
 
-        <h1 className="font-bold my-1">
+        <h1 className="font-bold text-sm sm:text-base">
           Open Positions:
-          <span className="pl-4 font-normal text-gray-800">
+          <span className="pl-2 sm:pl-4 font-normal text-gray-800">
             {singleJob.position}
           </span>
         </h1>
 
-        <h1 className="font-bold my-1">
+        <h1 className="font-bold text-sm sm:text-base">
           Total Applicants:
-          <span className="pl-4 font-normal text-gray-800">
+          <span className="pl-2 sm:pl-4 font-normal text-gray-800">
             {singleJob.applications?.length || 0}
           </span>
         </h1>
 
-        <h1 className="font-bold my-1">
+        <h1 className="font-bold text-sm sm:text-base">
           Posted Date:
-          <span className="pl-4 font-normal text-gray-800">
+          <span className="pl-2 sm:pl-4 font-normal text-gray-800">
             {new Date(singleJob.createdAt).toLocaleDateString()}
           </span>
         </h1>

@@ -21,15 +21,15 @@ const CompaniesTable = () => {
         setFilterCompany(filteredCompany);
     },[companies,searchCompanyByText])
     return (
-        <div>
+        <div className='overflow-x-auto'>
             <Table>
                 <TableCaption>A list of your recent registered companies</TableCaption>
                 <TableHeader>
                     <TableRow>
-                        <TableHead>Logo</TableHead>
-                        <TableHead>Name</TableHead>
-                        <TableHead>Date</TableHead>
-                        <TableHead className="text-right">Action</TableHead>
+                        <TableHead className='whitespace-nowrap'>Logo</TableHead>
+                        <TableHead className='whitespace-nowrap'>Name</TableHead>
+                        <TableHead className='whitespace-nowrap'>Date</TableHead>
+                        <TableHead className="text-right whitespace-nowrap">Action</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>

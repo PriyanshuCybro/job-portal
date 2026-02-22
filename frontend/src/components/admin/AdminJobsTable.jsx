@@ -56,15 +56,15 @@ const AdminJobsTable = () => {
     };
 
     return (
-        <div>
+        <div className='overflow-x-auto'>
             <Table>
                 <TableCaption>A list of your recent  posted jobs</TableCaption>
                 <TableHeader>
                     <TableRow>
-                        <TableHead>Company Name</TableHead>
-                        <TableHead>Role</TableHead>
-                        <TableHead>Date</TableHead>
-                        <TableHead className="text-right">Action</TableHead>
+                        <TableHead className='whitespace-nowrap'>Company Name</TableHead>
+                        <TableHead className='whitespace-nowrap'>Role</TableHead>
+                        <TableHead className='whitespace-nowrap'>Date</TableHead>
+                        <TableHead className="text-right whitespace-nowrap">Action</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>

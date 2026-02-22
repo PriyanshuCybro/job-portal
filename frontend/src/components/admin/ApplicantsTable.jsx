@@ -33,32 +33,32 @@ const ApplicantsTable = () => {
     }
 
     return (
-        <div>
+        <div className='overflow-x-auto'>
             <Table>
                 <TableCaption>A list of your recent applied user</TableCaption>
                 <TableHeader>
                     <TableRow>
-                        <TableHead>FullName</TableHead>
-                        <TableHead>Email</TableHead>
-                        <TableHead>Contact</TableHead>
-                        <TableHead>Resume</TableHead>
-                        <TableHead>Date</TableHead>
-                        <TableHead className="text-right">Action</TableHead>
+                        <TableHead className='whitespace-nowrap'>FullName</TableHead>
+                        <TableHead className='whitespace-nowrap'>Email</TableHead>
+                        <TableHead className='whitespace-nowrap'>Contact</TableHead>
+                        <TableHead className='whitespace-nowrap'>Resume</TableHead>
+                        <TableHead className='whitespace-nowrap'>Date</TableHead>
+                        <TableHead className="text-right whitespace-nowrap">Action</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
                     {
                         applicants && applicants?.applications?.map((item) => (
                             <tr key={item._id}>
-                                <TableCell>{item?.applicant?.fullname}</TableCell>
-                                <TableCell>{item?.applicant?.email}</TableCell>
-                                <TableCell>{item?.applicant?.phoneNumber}</TableCell>
-                                <TableCell >
+                                <TableCell className='whitespace-nowrap'>{item?.applicant?.fullname}</TableCell>
+                                <TableCell className='whitespace-nowrap'>{item?.applicant?.email}</TableCell>
+                                <TableCell className='whitespace-nowrap'>{item?.applicant?.phoneNumber}</TableCell>
+                                <TableCell className='whitespace-nowrap'>
                                     {
-                                        item?.resumePublicId ? <a className="text-blue-600 cursor-pointer" href={getServerResumeUrl(item?.resumePublicId)} target="_blank" rel="noopener noreferrer">{item?.resumeOriginalName || "View Resume"}</a> : <span>NA</span>
+                                        item?.resumePublicId ? <a className="text-blue-600 cursor-pointer underline" href={getServerResumeUrl(item?.resumePublicId)} target="_blank" rel="noopener noreferrer">{item?.resumeOriginalName || "View Resume"}</a> : <span>NA</span>
                                     }
                                 </TableCell>
-                                <TableCell>{item?.applicant.createdAt.split("T")[0]}</TableCell>
+                                <TableCell className='whitespace-nowrap'>{item?.applicant.createdAt.split("T")[0]}</TableCell>
                                 <TableCell className="float-right cursor-pointer">
                                     <Popover>
                                         <PopoverTrigger>
