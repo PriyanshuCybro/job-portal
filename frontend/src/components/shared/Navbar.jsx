@@ -118,13 +118,20 @@ const Navbar = () => {
 
                 </div>
 
-                {/* Mobile Menu Button */}
-                <button 
-                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                    className='md:hidden text-white'
-                >
-                    {mobileMenuOpen ? <X className='h-6 w-6' /> : <Menu className='h-6 w-6' />}
-                </button>
+                {/* Mobile Menu Button and Profile Icon */}
+                <div className='md:hidden flex items-center gap-3'>
+                    {user && (
+                        <Avatar className="h-8 w-8 ring-2 ring-teal-500/30">
+                            <AvatarImage src={user?.profile?.profilePhoto} alt="profile" />
+                        </Avatar>
+                    )}
+                    <button 
+                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                        className='text-white'
+                    >
+                        {mobileMenuOpen ? <X className='h-6 w-6' /> : <Menu className='h-6 w-6' />}
+                    </button>
+                </div>
             </div>
 
             {/* Mobile Menu */}
@@ -134,22 +141,48 @@ const Navbar = () => {
                         {
                             user && user.role === 'recruiter' ? (
                                 <>
-                                    <li><Link to="/admin/companies" className='hover:text-teal-400 transition-colors'>Companies</Link></li>
-                                    <li><Link to="/admin/jobs" className='hover:text-teal-400 transition-colors'>Jobs</Link></li>
+                                    <li><Link to="/admin/companies" className='hover:text-teal-400 transition-colors' onClick={() => setMobileMenuOpen(false)}>Companies</Link></li>
+                                    <li><Link to="/admin/jobs" className='hover:text-teal-400 transition-colors' onClick={() => setMobileMenuOpen(false)}>Jobs</Link></li>
                                 </>
                             ) : (
                                 <>
-                                    <li><Link to="/" className='hover:text-teal-400 transition-colors'>Home</Link></li>
-                                    <li><Link to="/jobs" className='hover:text-teal-400 transition-colors'>Jobs</Link></li>
-                                    <li><Link to="/browse" className='hover:text-teal-400 transition-colors'>Browse</Link></li>
+                                    <li><Link to="/" className='hover:text-teal-400 transition-colors' onClick={() => setMobileMenuOpen(false)}>Home</Link></li>
+                                    <li><Link to="/jobs" className='hover:text-teal-400 transition-colors' onClick={() => setMobileMenuOpen(false)}>Jobs</Link></li>
+                                    <li><Link to="/browse" className='hover:text-teal-400 transition-colors' onClick={() => setMobileMenuOpen(false)}>Browse</Link></li>
                                 </>
                             )
                         }
                     </ul>
-                    {!user && (
+                    {!user ? (
                         <div className='flex flex-col gap-2'>
-                            <Link to="/login"><Button variant="outline" className='w-full border-slate-500 text-slate-300 hover:bg-slate-700'>Login</Button></Link>
-                            <Link to="/signup"><Button className="w-full bg-teal-600 hover:bg-teal-700">Signup</Button></Link>
+                            <Link to="/login" onClick={() => setMobileMenuOpen(false)}><Button variant="outline" className='w-full border-slate-500 text-slate-300 hover:bg-slate-700'>Login</Button></Link>
+                            <Link to="/signup" onClick={() => setMobileMenuOpen(false)}><Button className="w-full bg-teal-600 hover:bg-teal-700">Signup</Button></Link>
+                        </div>
+                    ) : (
+                        <div className='border-t border-teal-500/30 pt-4'>
+                            <div className='flex items-center gap-3 mb-4'>
+                                <Avatar className="h-12 w-12 ring-2 ring-teal-500/30">
+                                    <AvatarImage src={user?.profile?.profilePhoto} alt="profile" />
+                                </Avatar>
+                                <div className='flex-1 min-w-0'>
+                                    <h4 className='font-medium text-white truncate'>{user?.fullname}</h4>
+                                    <p className='text-xs text-slate-400 truncate'>{user?.profile?.bio || "No bio"}</p>
+                                </div>
+                            </div>
+                            <div className='flex flex-col gap-2'>
+                                {user.role === 'student' && (
+                                    <Link to="/profile" onClick={() => setMobileMenuOpen(false)}>
+                                        <Button variant="outline" className='w-full border-slate-500 text-slate-300 hover:bg-slate-700 justify-start'>
+                                            <User2 className='h-4 w-4 mr-2' />
+                                            View Profile
+                                        </Button>
+                                    </Link>
+                                )}
+                                <Button onClick={() => { logoutHandler(); setMobileMenuOpen(false); }} variant="outline" className='w-full border-red-500/50 text-red-400 hover:bg-red-500/10 justify-start'>
+                                    <LogOut className='h-4 w-4 mr-2' />
+                                    Logout
+                                </Button>
+                            </div>
                         </div>
                     )}
                 </div>
