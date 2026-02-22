@@ -97,7 +97,7 @@ const JobDescription = () => {
 
           <div className="flex items-center gap-2 mt-4">
             <Badge className="text-blue-700 font-bold" variant="ghost">
-              {singleJob.postion} Positions
+              {singleJob.position} Positions
             </Badge>
             <Badge className="text-[#F83002] font-bold" variant="ghost">
               {singleJob.jobType}
@@ -150,7 +150,7 @@ const JobDescription = () => {
         <h1 className="font-bold my-1">
           Experience:
           <span className="pl-4 font-normal text-gray-800">
-            {singleJob.experience} yrs
+            {singleJob.experienceLevel} yrs
           </span>
         </h1>
 
@@ -158,6 +158,13 @@ const JobDescription = () => {
           Salary:
           <span className="pl-4 font-normal text-gray-800">
             {singleJob.salary} LPA
+          </span>
+        </h1>
+
+        <h1 className="font-bold my-1">
+          Open Positions:
+          <span className="pl-4 font-normal text-gray-800">
+            {singleJob.position}
           </span>
         </h1>
 
